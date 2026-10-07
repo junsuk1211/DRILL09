@@ -28,15 +28,21 @@ def handle_events():
                 pressed_keys.add(SDLK_LEFT)
             elif event.key == SDLK_ESCAPE:
                 running = False
+            elif event.key in (SDLK_UP, SDLK_DOWN):
+                pressed_keys.add(event.key)
         elif event.type == SDL_KEYUP:
             pressed_keys.discard(event.key)
 
 def update():
-    global x
+    global x, y
     if SDLK_RIGHT in pressed_keys:
         x += 10
     elif SDLK_LEFT in pressed_keys:
         x -= 10
+    if SDLK_UP in pressed_keys:
+        y += 10
+    elif SDLK_DOWN in pressed_keys:
+        y -= 10
 
 
 def draw():
