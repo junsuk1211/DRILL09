@@ -34,9 +34,13 @@ def handle_events():
             pressed_keys.discard(event.key)
 
 def update():
-    global x, y
+    global x, y, facing
     dx = int(SDLK_RIGHT in pressed_keys) - int(SDLK_LEFT in pressed_keys)
     dy = int(SDLK_UP in pressed_keys) - int(SDLK_DOWN in pressed_keys)
+    if dx > 0:
+        facing = "RIGHT"
+    elif dx < 0:
+        facing = "LEFT"
     x += dx * 10
     y += dy * 10
 
@@ -52,6 +56,7 @@ pressed_keys = set()
 running = True
 x = CANVAS_WIDTH / 2
 y = CANVAS_HEIGHT / 2
+facing = "RIGHT"
 frame = 0
 
 # fill here
