@@ -3,8 +3,8 @@ from pathlib import Path
 
 from pico2d import *
 
-CANVAS_WIDTH = 800
-CANVAS_HEIGHT = 600
+CANVAS_WIDTH = 1200
+CANVAS_HEIGHT = 900
 FRAME_SIZE = 100
 FRAME_COUNT = 8
 DRAW_WIDTH = 100
