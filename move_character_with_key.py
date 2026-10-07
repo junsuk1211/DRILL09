@@ -1,3 +1,5 @@
+from math import hypot
+
 from pico2d import *
 
 
@@ -43,6 +45,10 @@ def update(dt):
     elif dx < 0:
         facing = "LEFT"
     state = "MOVE" if dx or dy else "IDLE"
+    length = hypot(dx, dy)
+    if length:
+        dx /= length
+        dy /= length
     x += dx * MOVE_SPEED * dt
     y += dy * MOVE_SPEED * dt
 
