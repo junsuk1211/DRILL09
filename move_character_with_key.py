@@ -3,6 +3,10 @@ from pico2d import *
 
 CANVAS_WIDTH = 800
 CANVAS_HEIGHT = 600
+FRAME_SIZE = 100
+FRAME_COUNT = 8
+DRAW_WIDTH = 100
+DRAW_HEIGHT = 100
 
 open_canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
 background = load_image('TUK_GROUND.png')
@@ -34,10 +38,10 @@ frame = 0
 while running:
     clear_canvas()
     background.draw(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2, CANVAS_WIDTH, CANVAS_HEIGHT)
-    character.clip_draw(frame*100,100,100,100,x,90)
+    character.clip_draw(frame * FRAME_SIZE, 100, FRAME_SIZE, FRAME_SIZE, x, 90, DRAW_WIDTH, DRAW_HEIGHT)
     update_canvas()
     handle_events()
-    frame = (frame + 1) % 8
+    frame = (frame + 1) % FRAME_COUNT
     delay(0.05)
 
 close_canvas()
