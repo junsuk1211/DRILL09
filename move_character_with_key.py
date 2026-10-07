@@ -1,7 +1,7 @@
 from math import hypot
+from pathlib import Path
 
 from pico2d import *
-
 
 CANVAS_WIDTH = 800
 CANVAS_HEIGHT = 600
@@ -11,16 +11,13 @@ DRAW_WIDTH = 100
 DRAW_HEIGHT = 100
 MOVE_SPEED = 200.0
 ANIMATION_FPS = {"IDLE": 6.0, "MOVE": 12.0}
-
-open_canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
-background = load_image('TUK_GROUND.png')
-character = load_image('animation_sheet.png')
-
+MAX_DT = 0.05
+LOOP_DELAY = 0.01
+ASSET_DIR = Path(__file__).resolve().parent
 
 def handle_events():
     global running
 
-    # fill here
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
@@ -85,17 +82,27 @@ state = "IDLE"
 frame = 0
 animation_elapsed = 0.0
 
-last_time = get_time()
-while running:
-    current_time = get_time()
-    dt = current_time - last_time
-    last_time = current_time
-    handle_events()
-    if not running:
-        break
-    update(dt)
-    draw()
-    delay(0.05)
+def main():
+    global background, character
 
-close_canvas()
+    open_canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
+    try:
+        background = load_image(str(ASSET_DIR / 'TUK_GROUND.png'))
+        character = load_image(str(ASSET_DIR / 'animation_sheet.png'))
+        last_time = get_time()
+        while running:
+            current_time = get_time()
+            dt = max(0.0, min(current_time - last_time, MAX_DT))
+            last_time = current_time
+            handle_events()
+            if not running:
+                break
+            update(dt)
+            draw()
+            delay(LOOP_DELAY)
+    finally:
+        close_canvas()
 
+
+if __name__ == '__main__':
+    main()
