@@ -1,7 +1,10 @@
 from pico2d import *
 
 
-open_canvas()
+CANVAS_WIDTH = 800
+CANVAS_HEIGHT = 600
+
+open_canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
 grass = load_image('grass.png')
 character = load_image('animation_sheet.png')
 
@@ -24,7 +27,7 @@ def handle_events():
                 running = False
 
 running = True
-x = 800 // 2
+x = CANVAS_WIDTH // 2
 frame = 0
 
 # fill here
