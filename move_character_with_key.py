@@ -7,6 +7,7 @@ FRAME_SIZE = 100
 FRAME_COUNT = 8
 DRAW_WIDTH = 100
 DRAW_HEIGHT = 100
+MOVE_SPEED = 200.0
 
 open_canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
 background = load_image('TUK_GROUND.png')
@@ -33,7 +34,7 @@ def handle_events():
         elif event.type == SDL_KEYUP:
             pressed_keys.discard(event.key)
 
-def update():
+def update(dt):
     global x, y, facing, state
     dx = int(SDLK_RIGHT in pressed_keys) - int(SDLK_LEFT in pressed_keys)
     dy = int(SDLK_UP in pressed_keys) - int(SDLK_DOWN in pressed_keys)
@@ -42,8 +43,8 @@ def update():
     elif dx < 0:
         facing = "LEFT"
     state = "MOVE" if dx or dy else "IDLE"
-    x += dx * 10
-    y += dy * 10
+    x += dx * MOVE_SPEED * dt
+    y += dy * MOVE_SPEED * dt
 
 
 def draw():
@@ -64,12 +65,15 @@ facing = "RIGHT"
 state = "IDLE"
 frame = 0
 
-# fill here
+last_time = get_time()
 while running:
+    current_time = get_time()
+    dt = current_time - last_time
+    last_time = current_time
     handle_events()
     if not running:
         break
-    update()
+    update(dt)
     draw()
     frame = (frame + 1) % FRAME_COUNT
     delay(0.05)
