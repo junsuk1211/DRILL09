@@ -31,14 +31,15 @@ def handle_events():
                 running = False
 
 running = True
-x = CANVAS_WIDTH // 2
+x = CANVAS_WIDTH / 2
+y = CANVAS_HEIGHT / 2
 frame = 0
 
 # fill here
 while running:
     clear_canvas()
     background.draw(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2, CANVAS_WIDTH, CANVAS_HEIGHT)
-    character.clip_draw(frame * FRAME_SIZE, 100, FRAME_SIZE, FRAME_SIZE, x, 90, DRAW_WIDTH, DRAW_HEIGHT)
+    character.clip_draw(frame * FRAME_SIZE, 100, FRAME_SIZE, FRAME_SIZE, x, y, DRAW_WIDTH, DRAW_HEIGHT)
     update_canvas()
     handle_events()
     frame = (frame + 1) % FRAME_COUNT
