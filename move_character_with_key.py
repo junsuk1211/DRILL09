@@ -34,13 +34,14 @@ def handle_events():
             pressed_keys.discard(event.key)
 
 def update():
-    global x, y, facing
+    global x, y, facing, state
     dx = int(SDLK_RIGHT in pressed_keys) - int(SDLK_LEFT in pressed_keys)
     dy = int(SDLK_UP in pressed_keys) - int(SDLK_DOWN in pressed_keys)
     if dx > 0:
         facing = "RIGHT"
     elif dx < 0:
         facing = "LEFT"
+    state = "MOVE" if dx or dy else "IDLE"
     x += dx * 10
     y += dy * 10
 
@@ -49,6 +50,8 @@ def draw():
     clear_canvas()
     background.draw(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2, CANVAS_WIDTH, CANVAS_HEIGHT)
     row_y = 100 if facing == "RIGHT" else 0
+    if state == "IDLE":
+        row_y += 200
     character.clip_draw(frame * FRAME_SIZE, row_y, FRAME_SIZE, FRAME_SIZE, x, y, DRAW_WIDTH, DRAW_HEIGHT)
     update_canvas()
 
@@ -58,6 +61,7 @@ running = True
 x = CANVAS_WIDTH / 2
 y = CANVAS_HEIGHT / 2
 facing = "RIGHT"
+state = "IDLE"
 frame = 0
 
 # fill here
