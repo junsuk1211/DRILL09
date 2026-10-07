@@ -48,7 +48,8 @@ def update():
 def draw():
     clear_canvas()
     background.draw(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2, CANVAS_WIDTH, CANVAS_HEIGHT)
-    character.clip_draw(frame * FRAME_SIZE, 100, FRAME_SIZE, FRAME_SIZE, x, y, DRAW_WIDTH, DRAW_HEIGHT)
+    row_y = 100 if facing == "RIGHT" else 0
+    character.clip_draw(frame * FRAME_SIZE, row_y, FRAME_SIZE, FRAME_SIZE, x, y, DRAW_WIDTH, DRAW_HEIGHT)
     update_canvas()
 
 
