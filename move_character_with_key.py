@@ -52,6 +52,7 @@ def update(dt):
     x += dx * MOVE_SPEED * dt
     y += dy * MOVE_SPEED * dt
     x = max(DRAW_WIDTH / 2, min(x, CANVAS_WIDTH - DRAW_WIDTH / 2))
+    y = max(DRAW_HEIGHT / 2, min(y, CANVAS_HEIGHT - DRAW_HEIGHT / 2))
 
 
 def draw():
