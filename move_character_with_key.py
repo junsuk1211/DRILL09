@@ -35,14 +35,10 @@ def handle_events():
 
 def update():
     global x, y
-    if SDLK_RIGHT in pressed_keys:
-        x += 10
-    elif SDLK_LEFT in pressed_keys:
-        x -= 10
-    if SDLK_UP in pressed_keys:
-        y += 10
-    elif SDLK_DOWN in pressed_keys:
-        y -= 10
+    dx = int(SDLK_RIGHT in pressed_keys) - int(SDLK_LEFT in pressed_keys)
+    dy = int(SDLK_UP in pressed_keys) - int(SDLK_DOWN in pressed_keys)
+    x += dx * 10
+    y += dy * 10
 
 
 def draw():
