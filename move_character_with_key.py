@@ -44,7 +44,7 @@ def update(dt):
         facing = "RIGHT"
     elif dx < 0:
         facing = "LEFT"
-    state = "MOVE" if dx or dy else "IDLE"
+    previous_position = (x, y)
     length = hypot(dx, dy)
     if length:
         dx /= length
@@ -53,6 +53,7 @@ def update(dt):
     y += dy * MOVE_SPEED * dt
     x = max(DRAW_WIDTH / 2, min(x, CANVAS_WIDTH - DRAW_WIDTH / 2))
     y = max(DRAW_HEIGHT / 2, min(y, CANVAS_HEIGHT - DRAW_HEIGHT / 2))
+    state = "MOVE" if (x, y) != previous_position else "IDLE"
 
 
 def draw():
