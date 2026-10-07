@@ -10,6 +10,7 @@ FRAME_COUNT = 8
 DRAW_WIDTH = 100
 DRAW_HEIGHT = 100
 MOVE_SPEED = 200.0
+ANIMATION_FPS = {"IDLE": 6.0, "MOVE": 12.0}
 
 open_canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
 background = load_image('TUK_GROUND.png')
@@ -37,7 +38,7 @@ def handle_events():
             pressed_keys.discard(event.key)
 
 def update(dt):
-    global x, y, facing, state
+    global x, y, facing, state, frame, animation_elapsed
     dx = int(SDLK_RIGHT in pressed_keys) - int(SDLK_LEFT in pressed_keys)
     dy = int(SDLK_UP in pressed_keys) - int(SDLK_DOWN in pressed_keys)
     if dx > 0:
@@ -54,6 +55,11 @@ def update(dt):
     x = max(DRAW_WIDTH / 2, min(x, CANVAS_WIDTH - DRAW_WIDTH / 2))
     y = max(DRAW_HEIGHT / 2, min(y, CANVAS_HEIGHT - DRAW_HEIGHT / 2))
     state = "MOVE" if (x, y) != previous_position else "IDLE"
+    animation_elapsed += dt
+    frame_interval = 1.0 / ANIMATION_FPS[state]
+    while animation_elapsed >= frame_interval:
+        animation_elapsed -= frame_interval
+        frame = (frame + 1) % FRAME_COUNT
 
 
 def draw():
@@ -73,6 +79,7 @@ y = CANVAS_HEIGHT / 2
 facing = "RIGHT"
 state = "IDLE"
 frame = 0
+animation_elapsed = 0.0
 
 last_time = get_time()
 while running:
@@ -84,7 +91,6 @@ while running:
         break
     update(dt)
     draw()
-    frame = (frame + 1) % FRAME_COUNT
     delay(0.05)
 
 close_canvas()
