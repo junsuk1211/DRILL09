@@ -31,6 +31,14 @@ def handle_events():
         elif event.type == SDL_KEYUP:
             pressed_keys.discard(event.key)
 
+def update():
+    global x
+    if SDLK_RIGHT in pressed_keys:
+        x += 10
+    elif SDLK_LEFT in pressed_keys:
+        x -= 10
+
+
 def draw():
     clear_canvas()
     background.draw(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2, CANVAS_WIDTH, CANVAS_HEIGHT)
@@ -46,8 +54,11 @@ frame = 0
 
 # fill here
 while running:
-    draw()
     handle_events()
+    if not running:
+        break
+    update()
+    draw()
     frame = (frame + 1) % FRAME_COUNT
     delay(0.05)
 
